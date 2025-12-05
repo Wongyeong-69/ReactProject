@@ -1,0 +1,505 @@
+.home-container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 36px 20px 60px;
+}
+
+/* 상단 네비 + 히어로 느낌 */
+.home-header {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-bottom: 28px;
+}
+
+.home-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.home-title {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.home-title-badge {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.08);
+  color: var(--primary-strong);
+}
+
+.home-subtitle {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+/* 히어로 + 폼, 리스트를 두 컬럼 느낌으로 */
+.home-main-grid {
+  display: flex;
+  align-items: flex-start;
+  gap: 48px;
+
+  width: 100%;
+  max-width: 1200px;     /* ⭐ 전체 레이아웃 폭 제한 */
+  margin: 40px auto;     /* ⭐ 가운데 정렬 */
+  padding: 0 20px;       /* 좌우 여백 조금 */
+}
+
+
+
+/* 새 여행 만들기 카드 - glassmorphism 느낌 */
+.trip-form-card {
+  background: radial-gradient(circle at top left, #eff6ff, #ffffff 40%);
+  padding: 22px 22px 80px;   /* ← 여기만 변경하면 밑부분 늘어남 */
+  border-radius: 22px;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(191, 219, 254, 0.9);
+}
+
+.trip-form-card .section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.trip-form-card .section-title::before {
+  content: "✈";
+  font-size: 18px;
+}
+
+/* 폼 레이아웃 */
+.trip-form-row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 14px;
+}
+
+.trip-form-row label {
+  font-size: 13px;
+  margin-bottom: 4px;
+  color: var(--text-muted);
+}
+
+.trip-form-row input {
+  padding: 9px 11px;
+  border-radius: 12px;
+  border: 1px solid #cbd5f5;
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.trip-form-row input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.18);
+}
+
+.trip-form-row--inline {
+  flex-direction: row;
+  gap: 16px;
+}
+
+.trip-form-field {
+  flex: 1;
+}
+
+.trip-form-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
+/* 여행 리스트 섹션 */
+.trip-list-section {
+  margin-top: -8px;      /* 🔥 좀 더 위로 */
+  padding: 0 0 32px 0;
+}
+
+.trip-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.trip-list-subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* 여행 리스트 영역을 너무 넓지 않게 가운데로 */
+.trip-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* ⭐ 한 줄에 2개 */
+  gap: 28px;
+  width: 100%;
+}
+
+
+
+
+
+
+.trip-card {
+  background: var(--surface);
+  padding: 16px 18px;
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.trip-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.trip-card-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.trip-card-chip {
+  font-size: 11px;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: var(--primary-soft);
+  color: var(--primary-strong);
+}
+
+.trip-card-meta {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.trip-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+/* 반응형 살짝 */
+@media (max-width: 900px) {
+  .home-main-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.image-upload-button {
+  display: inline-block;
+  padding: 8px 14px;
+  background: #2563eb;
+  color: white;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+  margin-top: 4px;
+}
+
+.image-upload-button:hover {
+  background: #1d4ed8;
+}
+
+.image-upload-helper {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+/* 미리보기 썸네일 */
+.trip-form-image-preview.enhanced {
+  width: 110px;
+  height: 110px;
+  border-radius: 14px;
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.trip-form-image-preview.enhanced img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.preview-placeholder {
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+/* 카드 상단 이미지 */
+.trip-card-image-wrap {
+  margin: -4px -4px 10px;
+  border-radius: 14px;
+  overflow: hidden;
+  max-height: 150px;
+}
+
+.trip-card-image {
+  border-radius: 18px;
+  margin: 0 14px;  /* 좌우 여백 추가 */
+  height: 180px;
+  overflow: hidden;
+}
+
+/* 작은 썸네일 카드 스타일 */
+.trip-card.small-thumb {
+  display: flex;
+  gap: 14px;
+  padding: 16px;
+  background: white;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  transition: 0.2s;
+  align-items: center;
+}
+
+.trip-card.small-thumb:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  border-color: #d1d5db;
+}
+
+/* 썸네일 영역 */
+.trip-thumb {
+  width: 110px;
+  height: 110px;
+  border-radius: 22px; /* 둥글기 더 주기 */
+  overflow: hidden;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+}
+
+
+.trip-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.trip-thumb-placeholder {
+  font-size: 24px;
+  color: #9ca3af;
+}
+
+/* 정보 텍스트 */
+.trip-info {
+  flex: 1;
+}
+
+.trip-title {
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0 0 4px;
+}
+
+.trip-date {
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 4px;
+}
+
+.trip-budget {
+  font-size: 14px;
+  color: #374151;
+  margin-bottom: 10px;
+}
+
+/* 버튼 영역 */
+.trip-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.image-upload-helper {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+.preview-placeholder-icon {
+  font-size: 22px;
+  color: #9ca3af;
+}
+/* ==== 사진 드롭존 스타일 ==== */
+
+.image-dropzone {
+  margin-top: 6px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px dashed #bfdbfe;
+  background: #eff6ff;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.image-dropzone:hover {
+  border-color: #2563eb;
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.12);
+  background: #e0ecff;
+  transform: translateY(-1px);
+}
+
+.image-dropzone-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.12);
+}
+
+.image-dropzone-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.image-dropzone-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1f2933;
+}
+
+.image-dropzone-sub {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* 이미지가 선택된 상태 */
+.image-dropzone--filled {
+  border-style: solid;
+  border-color: #2563eb;
+  background: #e0ecff;
+}
+
+.image-dropzone-thumb {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #111827;
+  flex-shrink: 0;
+}
+
+.image-dropzone-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ===== 새로운 여행 카드 ===== */
+
+.trip-card.modern-card {
+  background: #ffffff;
+  border-radius: 22px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  border: 1px solid #f1f1f1;
+
+  padding-bottom: 18px;
+}
+
+
+/* 이미지 영역 */
+.trip-card-image {
+  position: relative;
+  width: 100%;
+  height: 190px;                 /* 🔹 살짝만 높이 키우거나(원하면 170~190 사이 조절) */
+  overflow: hidden;
+  background: #f3f4f6;
+}
+
+/* 안의 이미지 모서리도 살짝 둥글게 */
+.trip-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 18px 18px 0 0;  /* 🔹 윗부분만 부드럽게 */
+}
+
+
+/* placeholder */
+.trip-card-image-placeholder {
+  width: 100%;
+  height: 100%;
+  font-size: 48px;
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 상태 라벨 */
+.trip-status-badge {
+  position: absolute;
+  left: 16px;
+  top: 16px;
+
+  background: #fde68a;
+  color: #3f3f46;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 10px;
+  border: 1px solid #fcd34d;
+}
+
+/* 카드 본문 */
+.trip-card-body {
+  padding: 20px;
+}
+
+.trip-card-body .trip-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 10px 0 8px;
+}
+
+.trip-card-body .trip-date,
+.trip-card-body .trip-budget {
+  font-size: 15px;
+  color: #4b5563;
+  margin: 4px 0;
+}
+
+/* 버튼 영역 넓게 */
+.trip-actions.wide {
+  margin-top: 14px;
+  display: flex;
+  gap: 12px;
+}
+
+/* 삭제 버튼은 라인 스타일 */
+.btn.danger-line {
+  background: transparent;
+  border: 1.5px solid #fca5a5;
+  color: #dc2626;
+  padding: 8px 16px;
+  border-radius: 14px;
+}
+
+.btn.danger-line:hover {
+  background: #fee2e2;
+}
