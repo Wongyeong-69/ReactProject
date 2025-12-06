@@ -1,34 +1,42 @@
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useState, useMemo, useEffect } from "react";
 import "./TripDetail.css";
-import {
-  useTrips,
-  useTripActions,
-  useTripsLoading,
-} from "../context/TripContext.jsx";
+// 🔻 TripContext 안 씀
+// import { useTrips, useTripActions, useTripsLoading } from "../context/TripContext.jsx";
 
-function TripDetail() {
+// ✅ App.jsx 에서 모든 상태/액션을 props로 받기
+function TripDetail({
+  trips,
+  isLoading,
+  addSchedule,
+  deleteSchedule,
+  addCheckItem,
+  toggleCheckItem,
+  deleteCheckItem,
+  setMemo,
+  updateTrip,
+}) {
   const { tripId } = useParams();
   const navigate = useNavigate();
 
-  const trips = useTrips();
-  const isLoading = useTripsLoading();
-
-  const {
-    addSchedule,
-    deleteSchedule,
-    addCheckItem,
-    toggleCheckItem,
-    deleteCheckItem,
-    setMemo,
-    updateTrip,
-  } = useTripActions();
+  // 🔻 Context 훅 제거
+  // const trips = useTrips();
+  // const isLoading = useTripsLoading();
+  // const {
+  //   addSchedule,
+  //   deleteSchedule,
+  //   addCheckItem,
+  //   toggleCheckItem,
+  //   deleteCheckItem,
+  //   setMemo,
+  //   updateTrip,
+  // } = useTripActions();
 
   // ---- 공통 상태들 ----
   const [activeTab, setActiveTab] = useState("schedule");
   const [checkInput, setCheckInput] = useState("");
 
-  // 여행 찾기 (isLoading이 끝나면 값이 잡힘)
+  // 여행 찾기
   const id = Number(tripId);
   const trip = trips.find((t) => t.id === id);
 

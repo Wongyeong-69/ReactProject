@@ -1,12 +1,14 @@
-// src/pages/Stats.jsx
+// src/pages_temp/Stats.jsx
 import { Link } from "react-router-dom";
 import "./Stats.css";
-import { useTrips, useTripsLoading } from "../context/TripContext.jsx";
 import { useMemo } from "react";
+// 🔻 TripContext 안 씀
+// import { useTrips, useTripsLoading } from "../context/TripContext.jsx";
 
-function Stats() {
-  const trips = useTrips();
-  const isLoading = useTripsLoading();
+// ✅ App.jsx 에서 trips, isLoading 을 props로 받기
+function Stats({ trips, isLoading }) {
+  // const trips = useTrips();
+  // const isLoading = useTripsLoading();
 
   // 전체 여행 수
   const totalTrips = trips.length;
@@ -42,7 +44,8 @@ function Stats() {
   const longestTrip = useMemo(() => {
     if (trips.length === 0) return null;
     return [...trips].sort(
-      (a, b) => calcDays(b.startDate, b.endDate) - calcDays(a.startDate, a.endDate)
+      (a, b) =>
+        calcDays(b.startDate, b.endDate) - calcDays(a.startDate, a.endDate)
     )[0];
   }, [trips]);
 

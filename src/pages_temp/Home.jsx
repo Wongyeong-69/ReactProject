@@ -1,17 +1,9 @@
 import { Link } from "react-router-dom";
-import { useState, useRef} from "react";
+import { useState, useRef } from "react";
 import "./Home.css";
-import {
-  useTrips,
-  useTripActions,
-  useTripsLoading,
-} from "../context/TripContext.jsx";
 
-function Home() {
-  const trips = useTrips();
-  const { addTrip, deleteTrip } = useTripActions();
-  const isLoading = useTripsLoading();
-
+// App.jsx 에서 trips, addTrip, deleteTrip, isLoading 을 props로 받음
+function Home({ trips, addTrip, deleteTrip, isLoading }) {
   // 폼 상태
   const [form, setForm] = useState({
     name: "",
@@ -29,9 +21,10 @@ function Home() {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
- const handleSelectFile = () => {
-  fileInputRef.current?.click();
-};
+  const handleSelectFile = () => {
+    fileInputRef.current?.click();
+  };
+
   // 파일 선택 핸들러
   const onChangeImage = (e) => {
     const file = e.target.files && e.target.files[0];
@@ -47,11 +40,38 @@ function Home() {
     reader.readAsDataURL(file);
   };
 
+  // 출발일~도착일 형식 예쁘게
+  const formatDateRange = (start, end) => {
+    if (!start || !end) return "";
+    const s = start.replaceAll("-", ".");
+    const e = end.replaceAll("-", ".");
+    return `${s} ~ ${e}`;
+  };
+
+  // 오늘 날짜 기준으로 상태 라벨 계산
+  const getStatusLabel = (trip) => {
+    const today = new Date().toISOString().slice(0, 10); // "YYYY-MM-DD"
+
+    // 여행이 끝난 경우
+    if (trip.endDate < today) {
+      return "완료";
+    }
+
+    // 아직 안 지났으면 진행 예정
+    return "진행 예정";
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
 
     if (!form.name || !form.startDate || !form.endDate) {
       alert("여행 이름과 날짜를 입력해 주세요.");
+      return;
+    }
+
+    // 출발일이 도착일보다 늦으면 막기
+    if (form.startDate > form.endDate) {
+      alert("출발일이 도착일보다 늦을 수 없습니다.");
       return;
     }
 
@@ -80,13 +100,6 @@ function Home() {
     if (window.confirm("이 여행을 삭제할까요?")) {
       deleteTrip(id);
     }
-  };
-
-  const formatDateRange = (start, end) => {
-    if (!start || !end) return "";
-    const s = start.replaceAll("-", ".");
-    const e = end.replaceAll("-", ".");
-    return `${s} ~ ${e}`;
   };
 
   return (
@@ -203,7 +216,7 @@ function Home() {
                   accept="image/*"
                   ref={fileInputRef}
                   onChange={onChangeImage}
-                  style={{ display: "none" }} //화면에 안보여서 사용자가 클릭할 수 없음
+                  style={{ display: "none" }} // 화면에 안 보이게
                 />
               </div>
             </div>
@@ -250,7 +263,7 @@ function Home() {
 
                     {/* 상태 라벨 */}
                     <span className="trip-status-badge">
-                      {trip.status === "planned" ? "진행 예정" : "완료"}
+                      {getStatusLabel(trip)}
                     </span>
                   </div>
 
