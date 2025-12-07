@@ -2,9 +2,7 @@ import { Link } from "react-router-dom";
 import { useState, useRef } from "react";
 import "./Home.css";
 
-// App.jsx 에서 trips, addTrip, deleteTrip, isLoading 을 props로 받음
 function Home({ trips, addTrip, deleteTrip, isLoading }) {
-  // 폼 상태
   const [form, setForm] = useState({
     name: "",
     startDate: "",
@@ -12,7 +10,6 @@ function Home({ trips, addTrip, deleteTrip, isLoading }) {
     budget: "",
   });
 
-  // 사진 미리보기 상태
   const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = useRef(null);
 
@@ -25,7 +22,6 @@ function Home({ trips, addTrip, deleteTrip, isLoading }) {
     fileInputRef.current?.click();
   };
 
-  // 파일 선택 핸들러
   const onChangeImage = (e) => {
     const file = e.target.files && e.target.files[0];
     if (!file) {
@@ -35,12 +31,11 @@ function Home({ trips, addTrip, deleteTrip, isLoading }) {
 
     const reader = new FileReader();
     reader.onloadend = () => {
-      setImagePreview(reader.result); // data URL 저장
+      setImagePreview(reader.result); 
     };
     reader.readAsDataURL(file);
   };
 
-  // 출발일~도착일 형식 예쁘게
   const formatDateRange = (start, end) => {
     if (!start || !end) return "";
     const s = start.replaceAll("-", ".");
@@ -48,16 +43,13 @@ function Home({ trips, addTrip, deleteTrip, isLoading }) {
     return `${s} ~ ${e}`;
   };
 
-  // 오늘 날짜 기준으로 상태 라벨 계산
   const getStatusLabel = (trip) => {
-    const today = new Date().toISOString().slice(0, 10); // "YYYY-MM-DD"
+    const today = new Date().toISOString().slice(0, 10); 
 
-    // 여행이 끝난 경우
     if (trip.endDate < today) {
       return "완료";
     }
 
-    // 아직 안 지났으면 진행 예정
     return "진행 예정";
   };
 
@@ -69,7 +61,6 @@ function Home({ trips, addTrip, deleteTrip, isLoading }) {
       return;
     }
 
-    // 출발일이 도착일보다 늦으면 막기
     if (form.startDate > form.endDate) {
       alert("출발일이 도착일보다 늦을 수 없습니다.");
       return;
@@ -80,10 +71,9 @@ function Home({ trips, addTrip, deleteTrip, isLoading }) {
       startDate: form.startDate,
       endDate: form.endDate,
       budget: form.budget,
-      image: imagePreview, // 카드 썸네일에 사용
+      image: imagePreview, 
     });
 
-    // 폼 리셋
     setForm({
       name: "",
       startDate: "",
@@ -104,7 +94,6 @@ function Home({ trips, addTrip, deleteTrip, isLoading }) {
 
   return (
     <div className="home-container">
-      {/* 상단 헤더 */}
       <header className="home-header">
         <div className="home-header-top">
           <div>
@@ -121,9 +110,7 @@ function Home({ trips, addTrip, deleteTrip, isLoading }) {
         </div>
       </header>
 
-      {/* 메인: 왼쪽은 폼, 오른쪽은 리스트 */}
       <main className="home-main-grid">
-        {/* 새 여행 만들기 카드 */}
         <section className="trip-form-card">
           <h2 className="section-title">새 여행 만들기</h2>
 
@@ -173,7 +160,6 @@ function Home({ trips, addTrip, deleteTrip, isLoading }) {
               </div>
             </div>
 
-            {/* ✨ 사진 업로드 - 드롭존 스타일 */}
             <div className="trip-form-row">
               <label>여행 사진 (선택)</label>
               <div
@@ -216,7 +202,7 @@ function Home({ trips, addTrip, deleteTrip, isLoading }) {
                   accept="image/*"
                   ref={fileInputRef}
                   onChange={onChangeImage}
-                  style={{ display: "none" }} // 화면에 안 보이게
+                  style={{ display: "none" }} 
                 />
               </div>
             </div>
@@ -229,7 +215,6 @@ function Home({ trips, addTrip, deleteTrip, isLoading }) {
           </form>
         </section>
 
-        {/* 여행 리스트 영역 */}
         <section className="trip-list-section">
           <div className="trip-list-header">
             <h2 className="section-title">나의 여행 목록 ✈️</h2>
@@ -253,7 +238,6 @@ function Home({ trips, addTrip, deleteTrip, isLoading }) {
             ) : (
               trips.map((trip) => (
                 <article key={trip.id} className="trip-card modern-card">
-                  {/* 큰 이미지 영역 */}
                   <div className="trip-card-image">
                     {trip.image ? (
                       <img src={trip.image} alt={trip.name} />
@@ -261,20 +245,19 @@ function Home({ trips, addTrip, deleteTrip, isLoading }) {
                       <div className="trip-card-image-placeholder">📸</div>
                     )}
 
-                    {/* 상태 라벨 */}
                     <span className="trip-status-badge">
                       {getStatusLabel(trip)}
                     </span>
                   </div>
 
-                  {/* 아래 정보 영역 */}
                   <div className="trip-card-body">
                     <h3 className="trip-title">{trip.name}</h3>
                     <p className="trip-date">
                       {formatDateRange(trip.startDate, trip.endDate)}
                     </p>
                     <p className="trip-budget">
-                      예산 {trip.budget.toLocaleString()}원
+                      예산 {Number(trip.budget || 0).toLocaleString()}원
+
                     </p>
 
                     <div className="trip-actions wide">

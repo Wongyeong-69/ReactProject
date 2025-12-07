@@ -1,4 +1,3 @@
-// src/App.jsx
 import {
   BrowserRouter as Router,
   Routes,
@@ -117,22 +116,18 @@ function tripReducer(state, action) {
   }
 }
 
-// =====================
-//  App 컴포넌트
-// =====================
 function App() {
   const [trips, dispatch] = useReducer(
     tripReducer,
     [],
     loadInitialTrips
   );
-  const [isLoading] = useState(false); // 이제 항상 false
+  const [isLoading] = useState(false); 
 
   const nextTripId = useRef(1);
   const nextScheduleId = useRef(1);
   const nextCheckId = useRef(1);
 
-  // id 최대값 기준으로 ref 업데이트
   if (trips.length > 0) {
     const maxTripId = Math.max(...trips.map((t) => t.id || 0));
     nextTripId.current = maxTripId + 1;
@@ -152,7 +147,6 @@ function App() {
     }
   }
 
-  // trips 변경 시 localStorage 저장
   useEffect(() => {
     try {
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(trips));

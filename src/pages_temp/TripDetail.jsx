@@ -1,10 +1,7 @@
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useState, useMemo, useEffect } from "react";
 import "./TripDetail.css";
-// 🔻 TripContext 안 씀
-// import { useTrips, useTripActions, useTripsLoading } from "../context/TripContext.jsx";
 
-// ✅ App.jsx 에서 모든 상태/액션을 props로 받기
 function TripDetail({
   trips,
   isLoading,
@@ -19,20 +16,6 @@ function TripDetail({
   const { tripId } = useParams();
   const navigate = useNavigate();
 
-  // 🔻 Context 훅 제거
-  // const trips = useTrips();
-  // const isLoading = useTripsLoading();
-  // const {
-  //   addSchedule,
-  //   deleteSchedule,
-  //   addCheckItem,
-  //   toggleCheckItem,
-  //   deleteCheckItem,
-  //   setMemo,
-  //   updateTrip,
-  // } = useTripActions();
-
-  // ---- 공통 상태들 ----
   const [activeTab, setActiveTab] = useState("schedule");
   const [checkInput, setCheckInput] = useState("");
 

@@ -1,30 +1,20 @@
-// src/pages_temp/Stats.jsx
 import { Link } from "react-router-dom";
 import "./Stats.css";
 import { useMemo } from "react";
-// 🔻 TripContext 안 씀
-// import { useTrips, useTripsLoading } from "../context/TripContext.jsx";
 
-// ✅ App.jsx 에서 trips, isLoading 을 props로 받기
 function Stats({ trips, isLoading }) {
-  // const trips = useTrips();
-  // const isLoading = useTripsLoading();
-
-  // 전체 여행 수
+ 
   const totalTrips = trips.length;
 
-  // 전체 일정 수
   const totalSchedules = useMemo(() => {
     return trips.reduce((acc, t) => acc + (t.schedules?.length || 0), 0);
   }, [trips]);
 
-  // 여행당 평균 일정 수
   const avgSchedules = useMemo(() => {
     if (trips.length === 0) return 0;
     return Math.round(totalSchedules / trips.length);
   }, [totalSchedules, trips.length]);
 
-  // 가장 일정 많은 여행
   const mostSchedulesTrip = useMemo(() => {
     if (trips.length === 0) return null;
     return [...trips].sort(
@@ -32,7 +22,6 @@ function Stats({ trips, isLoading }) {
     )[0];
   }, [trips]);
 
-  // 여행 기간 계산 함수
   const calcDays = (start, end) => {
     const s = new Date(start);
     const e = new Date(end);
@@ -40,7 +29,6 @@ function Stats({ trips, isLoading }) {
     return diff;
   };
 
-  // 가장 오래 머문 여행
   const longestTrip = useMemo(() => {
     if (trips.length === 0) return null;
     return [...trips].sort(
@@ -49,7 +37,6 @@ function Stats({ trips, isLoading }) {
     )[0];
   }, [trips]);
 
-  // 🔹 로딩 상태일 때 화면
   if (isLoading) {
     return (
       <div className="stats-container">
@@ -76,7 +63,6 @@ function Stats({ trips, isLoading }) {
         </Link>
       </header>
 
-      {/* 최상단 카드 통계 */}
       <section className="stats-grid">
         <div className="stats-card">
           <h2 className="stats-card-title">전체 여행 수</h2>
@@ -101,7 +87,6 @@ function Stats({ trips, isLoading }) {
         </div>
       </section>
 
-      {/* 여행별 브레이크다운 */}
       <section className="stats-table-section">
         <h2 className="section-title">여행별 요약</h2>
 
@@ -136,7 +121,6 @@ function Stats({ trips, isLoading }) {
         )}
       </section>
 
-      {/* 추가 통계: 가장 오래 머문 여행 */}
       <section className="stats-table-section" style={{ marginTop: "24px" }}>
         <h2 className="section-title">가장 오래 머문 여행</h2>
         {longestTrip ? (
