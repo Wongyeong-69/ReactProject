@@ -159,7 +159,6 @@ function App() {
       startDate,
       endDate,
       budget: Number(budget) || 0,
-      spent: 0,
       status: "planned",
       schedules: [],
       checklist: [],
