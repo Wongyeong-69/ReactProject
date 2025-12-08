@@ -20,12 +20,9 @@ function loadInitialTrips() {
     if (!stored) return [];
 
     const parsed = JSON.parse(stored);
-    if (Array.isArray(parsed)) {
-      return parsed;
-    }
+    if (Array.isArray(parsed)) return parsed;
     return [];
-  } catch (e) {
-    console.error("localStorage parsing error", e);
+  } catch {
     return [];
   }
 }
@@ -108,7 +105,9 @@ function tripReducer(state, action) {
 
     case "SET_MEMO": {
       const { tripId, memo } = action;
-      return state.map((t) => (t.id === tripId ? { ...t, memo } : t));
+      return state.map((t) =>
+        t.id === tripId ? { ...t, memo } : t
+      );
     }
 
     default:
@@ -122,7 +121,7 @@ function App() {
     [],
     loadInitialTrips
   );
-  const [isLoading] = useState(false); 
+  const [isLoading] = useState(false);
 
   const nextTripId = useRef(1);
   const nextScheduleId = useRef(1);
@@ -150,9 +149,7 @@ function App() {
   useEffect(() => {
     try {
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(trips));
-    } catch (e) {
-      console.error("localStorage setItem error", e);
-    }
+    } catch {}
   }, [trips]);
 
   const addTrip = ({ name, startDate, endDate, budget, image }) => {
@@ -174,6 +171,28 @@ function App() {
 
   const deleteTrip = (id) => {
     dispatch({ type: "DELETE_TRIP", id });
+  };
+
+  const repeatTrip = (originalTripId, newStartDate, newEndDate) => {
+    const original = trips.find((t) => t.id === originalTripId);
+    if (!original) return;
+
+    const newId = Date.now();
+
+    const newTrip = {
+      ...original,
+      id: newId,
+      startDate: newStartDate,
+      endDate: newEndDate,
+      schedules: original.schedules
+        ? original.schedules.map((s) => ({ ...s }))
+        : [],
+      checklist: original.checklist
+        ? original.checklist.map((c) => ({ ...c }))
+        : [],
+    };
+
+    dispatch({ type: "ADD_TRIP", trip: newTrip });
   };
 
   const addSchedule = ({ tripId, date, time, place, type }) => {
@@ -231,6 +250,7 @@ function App() {
               />
             }
           />
+
           <Route
             path="/trip/:tripId"
             element={
@@ -247,9 +267,16 @@ function App() {
               />
             }
           />
+
           <Route
             path="/stats"
-            element={<Stats trips={trips} isLoading={isLoading} />}
+            element={
+              <Stats
+                trips={trips}
+                isLoading={isLoading}
+                onRepeatTrip={repeatTrip}
+              />
+            }
           />
         </Routes>
       </div>
